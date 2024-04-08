@@ -1,0 +1,22 @@
+{# templates/driver/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des pilotes{% endblock %}
+
+{% block body %}
+    <h1>Devien comme :</h1>
+        {% for driver in drivers %}
+
+<div class="card card-side bg-base-100 shadow-xl">
+  <figure><img src="{{ driver.headshot_url }}" alt="{{ driver.full_name }}"/></figure>
+  <div class="card-body">
+    <h2 class="card-title">{{ driver.full_name }}</h2>
+    <p>Écurie : {{ driver.team_name }}</p>
+    <div class="card-actions justify-end">
+      <button class="btn btn-primary">Numero :{{driver.driver_number}}</button>
+    </div>
+  </div>
+</div>
+        {% endfor %}
+{% endblock %}

@@ -1,19 +1,39 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+{% endblock %}
+
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+<div class="bg-cover bg-center h-screen" style="background-image: url('path/to/your/image.jpg');">
+    <div class="flex items-center justify-center h-full">
+        <div class="bg-white shadow-2xl p-8 rounded-lg w-full max-w-md">
+            <h1 class="text-2xl font-semibold mb-6 text-center">Register</h1>
 
-    {{ form_errors(registrationForm) }}
+            {{ form_errors(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.pseudo) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+            <form class="space-y-4" method="POST">
+                {{ form_widget(registrationForm._token) }}
+                <div>
+                    {{ form_label(registrationForm.pseudo, 'Username', {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+                    {{ form_widget(registrationForm.pseudo, {'attr': {'class': 'appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+                </div>
+                <div>
+                    {{ form_label(registrationForm.plainPassword, 'Password', {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+                    {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline', 'minlength': '6'}}) }}
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'mr-2 leading-tight', 'id': 'agreeTerms'}}) }}
+                        {{ form_label(registrationForm.agreeTerms, 'I accept the terms and conditions', {'label_attr': {'class': 'text-gray-700', 'for': 'agreeTerms'}}) }}
+                    </div>
+                </div>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

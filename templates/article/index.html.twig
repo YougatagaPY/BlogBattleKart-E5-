@@ -1,105 +1,48 @@
-{% include 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 
-<!--
- // WEBSITE: https://themefisher.com
- // TWITTER: https://twitter.com/themefisher
- // FACEBOOK: https://www.facebook.com/themefisher
- // GITHUB: https://github.com/themefisher/
--->
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Ajoutez vos feuilles de styles personnalisées ici -->
+{% endblock %}
 
-<html lang="fr">
+{% block body %}
+    <section class="dark:bg-gray-100 dark:text-gray-800">
+        <div class="container max-w-6xl p-6 mx-auto space-y-6 sm:space-y-12">
+            <div class="flex justify-end mb-6">
+                <a href="{{ path('article_new') }}" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">Rédiger un article</a>
+            </div>
+            {% for article in articles %}
+                <a rel="noopener noreferrer" href="{{ path('app_article_show', {'id': article.id}) }}" class="block max-w-sm gap-3 mx-auto sm:max-w-full group hover:no-underline focus:no-underline lg:grid lg:grid-cols-12 dark:bg-gray-50">
+                    <img src="{{ asset('images/BKabout.png') }}" alt="{{ article.titre }}" class="object-cover w-full h-64 rounded sm:h-96 lg:col-span-7 dark:bg-gray-500">
+                    <div class="p-6 space-y-2 lg:col-span-5">
+                        <h3 class="text-2xl font-semibold sm:text-4xl group-hover:underline group-focus:underline">{{ article.titre }}</h3>
+                        <span class="text-xs dark:text-gray-600">{{ article.date ? article.date|date('F d, Y') : '' }}</span>
+                        <p data-content="{{ article.contenu }}">{{ article.contenu }}</p>
+                    </div>
+                </a>
+            {% endfor %}
+            <div class="flex justify-center">
+                <a href="{{ path('app_article_index') }}" class="px-6 py-3 text-sm rounded-md hover:underline dark:bg-gray-50 dark:text-gray-600">Plus de posts...</a>
+            </div>
+        </div>
+    </section>
 
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('p[data-content]').each(function () {
+                    var maxLength = 100;
+                    var content = $(this).data('content');
 
+                    if (content.length > maxLength) {
+                        content = content.substring(0, maxLength) + '...';
+                    }
 
-<ul>
- {% for article in articles %}
-<h3 class="post-title"><a href="blog-single.html">{{ article.titre }}</a></h3>
-					<div class="post-meta">
-						<ul>
-						<li>
-								<i class="ion-android-people"></i> By : {{article.user}}
-							</li>
-							<li>
-								<i class="ion-calendar"></i> {{ article.date ? article.date|date('Y-m-d H:i:s') : '' }}
-							</li>
-
-							<li>
-								<a href="blog-grid.html"><i class="ion-pricetags"></i> {{article.categorie}}</a>
-							</li>
-						</ul>
-					</div>
-					<div class="post-content">
-						<p>L{{ article.contenu }} </p>
-						<a href="{{ path('app_article_show', {'id': article.id}) }}" class="btn btn-main">Read More</a>
-					</div>
-				</div>
-				<div>
-				    <a href="{{ path('app_article_index') }}"  class="btn btn-main">back to list</a>
-					    <a href="{{ path('app_showapi', {'id': article.id}) }}"  class="btn btn-main">API</a>
-										</div>
-
-
-    {% if is_granted('POST_EDIT',article) %}
-    <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
-    {{ include('article/_delete_form.html.twig') }}
-		{% endif %}
-    {% endfor %}
-
-</ul>
-    <a href="{{ path('article_new')}}">ADD</a>
-
-
-
-<!-- footer Start -->
-<footer class="footer">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="footer-manu">
-					<ul>
-						<li><a href="about.html">About Us</a></li>
-						<li><a href="contact.html">Contact us</a></li>
-						<li><a href="service.html">How it works</a></li>
-						<li><a href="faq.html">FAQ</a></li>
-						<li><a href="pricing.html">Pricing</a></li>
-					</ul>
-				</div>
-				<p class="copyright mb-0">Copyright <script>document.write(new Date().getFullYear())</script> &copy; Designed & Developed by <a
-						href="http://www.themefisher.com">Themefisher</a>. All rights reserved.
-					<br> Get More <a href="https://themefisher.com/free-bootstrap-templates/">Free Bootstrap
-						Templates</a>
-				</p>
-			</div>
-		</div>
-	</div>
-</footer>
-
-<!--Scroll to top-->
-<div id="scroll-to-top" class="scroll-to-top">
-	<span class="icon ion-ios-arrow-up"></span>
-</div>
-
-    <!-- 
-    Essential Scripts
-    =====================================-->
-
-
-    <!-- Main jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 3.1 -->
-    <script src="plugins/bootstrap/bootstrap.min.js"></script>
-    <!-- slick Carousel -->
-    <script src="plugins/slick/slick.min.js"></script>
-    <script src="plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
-    <!-- filter -->
-    <script src="plugins/shuffle/shuffle.min.js"></script>
-    <script src="plugins/SyoTimer/jquery.syotimer.min.js"></script>
-    <!-- Google Map -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU&libraries=places"></script>
-    <script src="plugins/google-map/map.js"></script>
-
-    <script src="js/script.js"></script>
-
-    </body>
-
-    </html>
+                    $(this).text(content);
+                });
+            });
+        </script>
+    {% endblock %}
+{% endblock %}

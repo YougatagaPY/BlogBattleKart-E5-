@@ -820,7 +820,7 @@ ul.dropdown-menu li {
   }
 }
 .slider {
-  background: url("../images/slider-bg.jpg") no-repeat;
+  background: url("../images/BattleKartBG.jpg") no-repeat;
   background-size: cover;
   background-attachment: fixed;
   background-position: 10% 0%;
@@ -979,7 +979,7 @@ ul.dropdown-menu li {
 }
 
 .feature {
-  background: url("../img/featue-bg.jpg");
+  background: url("../img/battlekartVs.png");
   background-position: 50% 94px;
   display: block;
   position: relative;
@@ -2080,14 +2080,14 @@ ul.dropdown-menu li {
 }
 
 .bg-1 {
-  background-image: url("../images/call-to-action-bg.jpg");
+  background-image: url("../images/bgBattleKartFond.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
 
 .bg-2 {
-  background: url("../images/featue-bg.jpg");
+  background: url("../images/battlekartVs.png");
   background-size: cover;
   background-attachment: fixed;
 }
