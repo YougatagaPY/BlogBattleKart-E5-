@@ -34,7 +34,7 @@ class ArticleType extends AbstractType
     {
         $builder
             ->add('titre')
-            ->add('contenu', CKEditorType::class)
+            ->add('contenu')
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
                 'choice_label' => 'libelle', // Remplacez 'nom' par le champ approprié de votre entité Categorie
