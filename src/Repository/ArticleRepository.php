@@ -51,6 +51,16 @@ class ArticleRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findArticlesByName(string $query): array
+{
+    return $this->createQueryBuilder('a')
+        ->where('a.titre LIKE :query OR a.contenu LIKE :query')
+        ->setParameter('query', '%'.$query.'%')
+        ->getQuery()
+        ->getResult();
+}
+
+
     // public function findArticlesByName(string $query)
     // {
     //     $qb = $this->createQueryBuilder('p');
@@ -71,25 +81,6 @@ class ArticleRepository extends ServiceEntityRepository
     //         ->getResult();
     // }
 
-    public function findArticlesByName(string $query)
-{
-    $qb = $this->createQueryBuilder('article'); 
-    $qb
-        ->where(
-            $qb->expr()->andX(
-                $qb->expr()->orX(
-                    $qb->expr()->like('article.titre', ':query'),
-                    $qb->expr()->like('article.contenu', ':query') 
-                ),
-                $qb->expr()->isNotNull('article.created_at') 
-            )
-        )
-        ->setParameter('query', '%' . $query . '%')
-    ;
-    return $qb
-        ->getQuery()
-        ->getResult();
-}
 
 
     public function ShowSeach(string $term): array
@@ -103,6 +94,7 @@ class ArticleRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    
     
 
     

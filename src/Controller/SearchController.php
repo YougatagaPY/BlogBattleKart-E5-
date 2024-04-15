@@ -2,42 +2,23 @@
 
 namespace App\Controller;
 
-use App\Entity\Categorie;
-use App\Entity\Article;
-use App\Repository\CategorieRepository;
-use App\Repository\ArticleRepository;
-use PhpCsFixer\Fixer\ControlStructure\ElseifFixer;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use App\Form\ArticleType;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\VarDumper\VarDumper;
-
-
-
+use App\Repository\ArticleRepository;
 
 
 class SearchController extends AbstractController
 {
-    #[Route('/search', name: 'app_search')]
-    public function index(): Response
+    // Affiche une barre de recherche
+    public function searchBar(): Response
     {
-        return $this->render('search/index.html.twig', [
-            'controller_name' => 'SearchController',
-        ]);
-    }
-
-    #[Route('/result', name: 'app_result')]
-    public function searchBar()
-    {
-        $form = $this->createFormBuilder()
+        $form = $this->createFormBuilder(null)
             ->setAction($this->generateUrl('app_leresult'))
-            ->setMethod('POST')
+            ->setMethod('GET')  // Utilisation de la méthode GET
             ->add('query', TextType::class, [
                 'label' => false,
                 'attr' => [
@@ -46,38 +27,35 @@ class SearchController extends AbstractController
                 ]
             ])
             ->add('recherche', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-primary'
-                ]
+                'attr' => ['class' => 'btn btn-primary']
             ])
             ->getForm();
+
         return $this->render('search/searchBar.html.twig', [
             'form' => $form->createView()
         ]);
     }
-
     #[Route('/lereesult', name: 'app_leresult')]
-    public function Leresult(Request $request, ArticleRepository $repo)
+    public function Leresult(Request $request, ArticleRepository $repo): Response
     {
-        $formData = $request->request->get('query'); // Récupérer les données du formulaire
-        $query = $formData['query'] ?? ''; // Accéder au champ "query" dans les données du formulaire
+        // Récupération de toutes les données de requête
+        $formData = $request->query->all();
+
+        // Extraction du terme de recherche du tableau 'form'
+        $query = isset($formData['form']['query']) ? $formData['form']['query'] : '';
+
         $articles = [];
-        dump($query);
-        
+
+        // Effectuer la recherche si un terme de recherche est fourni
         if ($query) {
             $articles = $repo->ShowSeach($query);
         }
-        
-        return $this->render('Search/index.html.twig', [
-            'articles' => $articles
+
+        // Rendu de la vue avec les articles trouvés et le terme de recherche
+        return $this->render('search/index.html.twig', [
+            'articles' => $articles,
+            'query' => $query
         ]);
     }
-
     
-    
-
- 
-
-
-
 }

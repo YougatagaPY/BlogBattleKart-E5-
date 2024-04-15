@@ -7,7 +7,7 @@
  // GITHUB: https://github.com/themefisher/
 -->
 
-<html lang="en">
+<html lang="fr">
 
 <!-- Slider Start -->
 <section class="slider">
@@ -17,7 +17,7 @@
 				<div class="block">
 					<h1 class="animated fadeInUp">Bienvenue sur le blog de <br> BATTLE KART</h1>
 					<p class="animated fadeInUp">Partagez vos aventures en karting et faites-nous vivre vos émotions !</br> Racontez-nous votre expérience sur la piste.</p>
-					<a href="https://themefisher.com/free-bootstrap-templates/" class="btn btn-main animated fadeInUp" >RÉDIGER UN ARTICLE</a>
+					<a href="{{path('app_article_index')}}" class="btn btn-main animated fadeInUp" >RÉDIGER UN ARTICLE</a>
 				</div>
 			</div>
 		</div>
@@ -46,20 +46,18 @@
 	</div>
 </section>
 
-<section class="feature bg-2">
-  <div class="container">
-    <div class="row justify-content-end">
-      <div class="col-md-6">
-        <h2 class="section-subtitle"></h2>
-        <p>
-        </p>
-        <p>
-        </p>
-        <p>
-        </p>
-      </div>
-    </div>
-  </div>
+<section class="call-to-action bg-1 section-sm overly">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="block">
+					<h2 class="mb-3"></h2>
+					<p></p>
+					<a class="btn btn-main btn-solid-border" href="{{path('driver_quiz')}}">Quel pilote de F1 es-tu ?</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
 
 <!-- Service Start -->
@@ -84,7 +82,7 @@
 				<div class="block">
 					<h2 class="mb-3"></h2>
 					<p></p>
-					<a class="btn btn-main btn-solid-border" href="contact.html">RACONTEZ-NOUS VOTRE ÉXPERIENCE !</a>
+					<a class="btn btn-main btn-solid-border" href="{{ path('article_new') }}">RACONTEZ-NOUS VOTRE ÉXPERIENCE !</a>
 				</div>
 			</div>
 		</div>
@@ -108,30 +106,30 @@
           <ul class="counter-box clearfix">
             <li>
               <div class="counter-item">
-              <ion-icon name="home-outline"></ion-icon>
+                <ion-icon name="earth-outline"></ion-icon>
                 <h4 class="count" data-count="32">0</h4>
                 <span>CENTRES DANS LE MONDE</span>
               </div>
             </li>
             <li>
               <div class="counter-item">
-                <i class="ion-ios-glasses-outline"></i>
+                <ion-icon name="home-outline"></ion-icon>
                 <h4 class="count" data-count="9">0</h4>
                 <span>CENTRES EN FRANCE</span>
               </div>
             </li>
             <li>
               <div class="counter-item">
-                <i class="ion-ios-compose-outline"></i>
+                <ion-icon name="game-controller-outline"></ion-icon>
                 <h4 class="count" data-count="6">0</h4>
                 <span>MODES DE JEU</span>
               </div>
             </li>
             <li>
               <div class="counter-item">
-                <i class="ion-ios-timer-outline"></i>
+                <ion-icon name="people-circle-outline"></ion-icon>
                 <h4 class="count" data-count="12">0</h4>
-                <span>Joueurs</span>
+                <span>Coureurs Max</span>
               </div>
             </li>
           </ul>
@@ -197,10 +195,7 @@
     <!-- Google Map -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU&libraries=places"></script>
     <script src="plugins/google-map/map.js"></script>
-
     <script src="js/script.js"></script>
-
     </body>
-
     </html>
    

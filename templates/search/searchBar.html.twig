@@ -1,6 +1,4 @@
-{# search/searchBar.html.twig #}
-
-{{ form_start(form, {'attr': {'class': 'search-form'}}) }}
-{{ form_widget(form.query, {'attr': {'class': 'form-control', 'placeholder': 'Entrez un mot-clé'}}) }}
-{{ form_widget(form.recherche, {'attr': {'class': 'btn btn-primary'}}) }}
+{{ form_start(form, {'method': 'get', 'attr': {'class': 'form-inline'}}) }}
+    {{ form_widget(form.query) }}
+    {{ form_widget(form.recherche) }}
 {{ form_end(form) }}

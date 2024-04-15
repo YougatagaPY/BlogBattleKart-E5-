@@ -1,0 +1,35 @@
+{# templates/driver/result.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Qui est tu ?{% endblock %}
+
+{% block body %}
+    <div class="flex flex-col justify-center items-center h-screen"> <!-- Centrer verticalement et horizontalement -->
+        <h1 class="mb-4 text-3xl font-semibold">Wow! Tu es :</h1> <!-- Texte "Wow! Tu es :" -->
+
+        <div class="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96 mb-5">
+            {% if driver %}
+                <div class="relative overflow-hidden bg-white shadow-lg bg-clip-border rounded-xl">
+                    <img src="{{ driver.headshot_url }}" alt="profile-picture" class="w-full h-auto" /> <!-- Ajuster la taille de l'image -->
+                </div>
+                <div class="p-6 text-center">
+                    <h4 class="mb-2 text-2xl font-semibold text-blue-gray-900">
+                        {{ driver.full_name }} <!-- Nom complet du pilote -->
+                    </h4>
+                    <p class="text-base font-medium text-gray-800">
+                        {{ driver.team_name }} <!-- Nom de l'équipe du pilote -->
+                    </p>
+                </div>
+                <!-- Liens sociaux... -->
+            {% else %}
+                <p>Aucun pilote n'a été trouvé.</p>
+            {% endif %}
+        </div>
+
+        <!-- Bouton Retour au quiz -->
+        <a href="{{ path('driver_quiz') }}" class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg shadow-lg transition duration-300">
+            Retour au quiz
+        </a>
+    </div>
+{% endblock %}

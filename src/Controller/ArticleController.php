@@ -28,6 +28,11 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Exception\MessageDecodingFailedException;
 use ApiPlatform\Metadata\ApiResource;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
+
+
 
 
 #[Route('/article')]
@@ -43,25 +48,39 @@ class ArticleController extends AbstractController
 
 
     #[Route('/new', name: 'article_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, Security $security): Response
     {
-        $article = new Article();
-        $form = $this->createForm(ArticleType::class, $article);
-        $form->handleRequest($request);
 
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        // Récupérer l'utilisateur connecté
+        $user = $security->getUser();
+    
+        // Créer un nouvel article et définir l'utilisateur connecté comme l'auteur
+        $article = new Article();
+        $article->setUser($user);
+    
+        // Définir la date de publication
+        $article->setDate(new \DateTime());
+    
+        // Créer le formulaire en incluant les champs de sélection du titre, du contenu et de la catégorie
+        $form = $this->createForm(ArticleType::class, $article);
+    
+        // Gérer la soumission du formulaire
+        $form->handleRequest($request);
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($article);
             $entityManager->flush();
-
+    
             return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
         }
-
+    
         return $this->render('article/new.html.twig', [
-            'article' => $article,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
-    
+
 
 
     #[Route('/{id}', name: 'app_article_show', methods: ['GET'])]

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Form;
 
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -16,21 +15,30 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Categorie;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 
 class ArticleType extends AbstractType
 {
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('titre')
-            ->add('contenu', CKEditorType::class ) // Utilisez CKEditorType ici
-            ->add('date', DateType::class, [
-                'widget' => 'single_text',
-            ])
-            ->add('user')
-        ;
+            ->add('contenu', CKEditorType::class)
+            ->add('categorie', EntityType::class, [
+                'class' => Categorie::class,
+                'choice_label' => 'libelle', // Remplacez 'nom' par le champ approprié de votre entité Categorie
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -39,6 +47,4 @@ class ArticleType extends AbstractType
             'data_class' => Article::class,
         ]);
     }
-
-  
 }
